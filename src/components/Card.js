@@ -49,7 +49,7 @@ const FileCard = ({ data }) => {
             </div>
             {/* <button></button> */}
             <Image
-              src={owner.thumbNail}
+              src={owner.thumbNail ? owner.thumbNail : "/noimage.jpg"}
               alt="File image"
               width={400}
               height={225}
