@@ -27,7 +27,7 @@ export async function GET() {
 
   try {
     const response = await drive.files.list({
-      pageSize: 15,
+      pageSize: 100,
       fields:
         "files(id, name, webViewLink, webContentLink, mimeType, parents, size, createdTime, modifiedTime, owners, shared, permissions, thumbnailLink, description, viewedByMeTime, trashed)",
     });
