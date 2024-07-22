@@ -31,7 +31,36 @@ export async function GET() {
       fields:
         "files(id, name, webViewLink, webContentLink, mimeType, parents, size, createdTime, modifiedTime, owners, shared, permissions, thumbnailLink, description, viewedByMeTime, trashed)",
     });
-    return NextResponse.json({ files: response.data.files });
+
+    const files = response.data.files;
+
+    const categorizedFiles = {
+      documents: [],
+      images: [],
+      videos: [],
+      others: [],
+    };
+
+    files.forEach((file) => {
+      if (
+        file.mimeType.startsWith("application/vnd.google-apps.document") ||
+        file.mimeType === "application/pdf" ||
+        file.mimeType.startsWith("application/msword") ||
+        file.mimeType.startsWith(
+          "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        )
+      ) {
+        categorizedFiles.documents.push(file);
+      } else if (file.mimeType.startsWith("image/")) {
+        categorizedFiles.images.push(file);
+      } else if (file.mimeType.startsWith("video/")) {
+        categorizedFiles.videos.push(file);
+      } else {
+        categorizedFiles.others.push(file);
+      }
+    });
+    // console.log(categorizedFiles, "categorizedFiles");
+    return NextResponse.json(categorizedFiles);
   } catch (error) {
     console.error("Error listing files:", error.message);
     return NextResponse.json({ error: "Error listing files" }, { status: 500 });

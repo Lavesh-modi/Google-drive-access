@@ -1,6 +1,9 @@
 import Image from "next/image";
 
 const FileCard = ({ data }) => {
+  document.addEventListener("contextmenu", (e) => {
+    e.preventDefault();
+  });
   const handleClick = (url) => {
     window.open(url, "_blank");
   };

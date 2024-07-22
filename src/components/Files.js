@@ -1,32 +1,36 @@
 "use client";
 
-import Table from "./Table";
+import { useState } from "react";
+import Navbar from "./Navbar";
 import useFetchFiles from "../hooks/useFetchFiles";
 import FileCard from "./Card";
 import SkeletonLoader from "./Loading";
 
 const Files = () => {
+  const [category, setCategory] = useState("documents");
   const { files, loading } = useFetchFiles("/api/list");
 
-  const columns = [
-    { header: "File ID", accessor: "id" },
-    { header: "File Name", accessor: "name" },
-  ];
-
+  const categorizedFiles = files ? files[category] : [];
   return (
     <>
-      <div className=" bg-gray-500 ">
-        <h1 className="  text-3xl font-bold underline bg-orange-600">Files</h1>
-        <br />
-        {/* <div>
-        {loading ? (
-          <SkeletonLoader />
-        ) : (
-          <Table data={files} columns={columns} />
-        )}
-      </div> */}
-        <div>{loading ? <SkeletonLoader /> : <FileCard data={files} />}</div>
-      </div>
+      {loading ? (
+        <SkeletonLoader />
+      ) : (
+        <div>
+          <Navbar setCategory={setCategory} />
+          <h1 className="text-3xl font-bold underline bg-black text-center m-5">
+            Files
+          </h1>
+          <br />
+          <div>
+            {loading ? (
+              <SkeletonLoader />
+            ) : (
+              <FileCard data={categorizedFiles} />
+            )}
+          </div>
+        </div>
+      )}
     </>
   );
 };
