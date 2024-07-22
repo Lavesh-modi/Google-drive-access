@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Files from "@/components/Files";
-// import Files from "..";
 
 export default function Home() {
   const [category, setCategory] = useState("documents");
@@ -11,7 +10,7 @@ export default function Home() {
   return (
     <>
       <Navbar setCategory={setCategory} />
-      <Files category={category} />
+      <Files category={category} setCategory={setCategory} />
     </>
   );
 }

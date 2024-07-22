@@ -1,12 +1,14 @@
 import Image from "next/image";
+import VideoPreview from "./Video";
 
-const FileCard = ({ data }) => {
+const FileCard = ({ data, category }) => {
   document.addEventListener("contextmenu", (e) => {
     e.preventDefault();
   });
   const handleClick = (url) => {
     window.open(url, "_blank");
   };
+  console.log(category, "category");
   return (
     <div className=" p-5  grid grid-cols-5 gap-3 ">
       {data
@@ -50,17 +52,23 @@ const FileCard = ({ data }) => {
                 </span>
               </div>
             </div>
-            {/* <button></button> */}
-            <Image
-              src={owner.thumbNail ? owner.thumbNail : "/noimage.jpg"}
-              alt="File image"
-              width={400}
-              height={225}
-              className="w-full h-48 object-cover"
-              onClick={() => {
-                handleClick(owner.link);
-              }}
-            />
+            {category == "videos" ? (
+              <VideoPreview
+                videoUrl={owner.link}
+                thumbnailUrl={owner.thumbNail}
+              />
+            ) : (
+              <Image
+                src={owner.thumbNail ? owner.thumbNail : "/noimage.jpg"}
+                alt="File image"
+                width={400}
+                height={225}
+                className="w-full h-48 object-cover"
+                onClick={() => {
+                  handleClick(owner.link);
+                }}
+              />
+            )}
             <div className="px-2 py-4">
               <div className="flex items-center gap-1">
                 <div className=" rounded-full h-[20px] w-[20px] flex items-center justify-center overflow-hidden">

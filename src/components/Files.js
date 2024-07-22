@@ -6,8 +6,7 @@ import useFetchFiles from "../hooks/useFetchFiles";
 import FileCard from "./Card";
 import SkeletonLoader from "./Loading";
 
-const Files = () => {
-  const [category, setCategory] = useState("documents");
+const Files = ({ category, setCategory }) => {
   const { files, loading } = useFetchFiles("/api/list");
 
   const categorizedFiles = files ? files[category] : [];
@@ -26,7 +25,7 @@ const Files = () => {
             {loading ? (
               <SkeletonLoader />
             ) : (
-              <FileCard data={categorizedFiles} />
+              <FileCard data={categorizedFiles} category={category} />
             )}
           </div>
         </div>
