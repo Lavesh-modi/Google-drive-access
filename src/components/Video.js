@@ -13,7 +13,6 @@ const VideoPreview = ({ videoUrl, thumbnailUrl }) => {
   const [isHovered, setIsHovered] = useState(false);
   const videoRef = useRef(null);
   const directVideoUrl = getDirectVideoUrl(videoUrl);
-  console.log(directVideoUrl, "dirwct"); // Convert to direct URL
 
   useEffect(() => {
     const handlePlay = () => {
